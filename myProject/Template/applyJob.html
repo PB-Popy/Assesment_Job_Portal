@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+    
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Job</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Apply For The Post of {{jobs.job_title}}</h1>
+        <form id="jobForm" method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="Resume">Resume</label>
+                <input type="file" class="form-control" id="Resume" name="Resume" required>
+            </div>
+            <div class="form-group">
+                <label for="Cover">Cover</label>
+                <input type="text" class="form-control" id="Cover" name="Cover" required>
+            </div>
+            <div class="form-group">
+                <label for="Skills">Skills</label>
+                <input type="text" class="form-control" id="Skills" name="Skills" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" class="form-control" id="image" name="image" required>
+            </div>
+            
+            <div>
+
+                {% if applied_jobs %}
+                {% for applied_jobs in applied_jobs %}
+            
+                {% if applied_jobs %}
+                <p class="alert alert-warning">Already Applied</p>
+                {% else %}
+                {% endif %}
+                
+                   
+                {% endfor %}
+                {% else %}
+                
+            
+                <button type="submit" class="btn btn-primary">Submit</button>
+                {% endif %}
+
+            </div>
+            
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+       
+    </script>
+</body>
+</html>
+
+    
+
+    
+
+{% endblock body %}
+    

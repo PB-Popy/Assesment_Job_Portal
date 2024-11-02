@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Listings</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .search-bar button {
+            padding: 10px;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            background-color: #218838;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s;
+            border-radius: 8px;
+            margin: 15px auto;
+            width: 90%;
+            max-width: 400px;
+            background-color: #fff;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            border-radius: 8px 8px 0 0;
+            width: 100%;
+        }
+
+        .container {
+            padding: 15px;
+        }
+
+        .container h4 {
+            margin: 10px 0;
+        }
+
+        .container p {
+            color: #555;
+        }
+
+        .container a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .container a:hover {
+            background-color: #0056b3;
+        }
+
+        .job-category {
+            font-weight: bold;
+            color: #333;
+            margin: 5px 0;
+        }
+
+        @media (max-width: 600px) {
+            .search-bar input {
+                width: 70%;
+            }
+
+            .card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Search Bar -->
+<div class="search-bar">
+    <form action="{% url 'searchJob' %}" method="GET">
+        <input type="text" name="query" placeholder="Search for jobs..." id="search-input" required>
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+{% for i in jobs %}
+<h2 style="text-align: center;">Title: {{ i.job_title }}</h2>
+
+<div class="card">
+    <img src="/{{ i.job_Pic }}" alt="Job Image">
+    <div class="container">
+        <h4><b>Number Of Openings: {{ i.number_of_openings }}</b></h4>
+        <p>Skill: {{ i.skills | title }}</p>
+        <p>Description: {{ i.description }}</p>
+        <div class="job-category">
+            {% if i.category == 'full_time' %}
+                <span>Category: Full Time</span>
+            {% elif i.category == 'part_time' %}
+                <span>Category: Part Time</span>
+            {% endif %}
+        </div>
+
+        {% if request.user.user_type == 'seeker' %}
+            <a href="{% url 'applyJob' i.id %}">Apply Job</a>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+
+</body>
+</html>
+{% endblock body %}

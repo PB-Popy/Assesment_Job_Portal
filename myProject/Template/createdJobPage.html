@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobs Created by {{ request.user.username }}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #eef2f3;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        #customers {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+            transition: background-color 0.3s;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        #customers tr:hover {
+            background-color: #dfe6e9;
+        }
+
+        #customers th {
+            background-color: #a54bda;
+            color: white;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        #customers img {
+            max-width: 80px;
+            border-radius: 6px;
+            transition: transform 0.3s;
+        }
+
+        #customers img:hover {
+            transform: scale(1.1);
+        }
+
+        #customers a {
+            margin: 0 5px;
+            text-decoration: none;
+            color: #0984e3;
+            transition: color 0.3s;
+        }
+
+        #customers a:hover {
+            color: #6c5ce7;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            #customers td, #customers th {
+                font-size: 14px; /* Smaller font size for mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Jobs Created by {{ request.user.username }}</h1>
+
+<table id="customers">
+    <tr>
+        <th>Job Title</th>
+        <th>Number Of Openings</th>
+        <th>Skills</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for i in jobs %}
+    <tr>
+        <td>{{ i.job_title }}</td>
+        <td>{{ i.number_of_openings }}</td>
+        <td>{{ i.skills }}</td>
+        <td>{{ i.category }}</td>
+        <td>{{ i.description }}</td>
+        <td>
+            <img src="/{{ i.job_Pic }}" alt="Job Image">
+        </td>
+        <td>
+            <a href="{% url 'deleteJob' i.id %}">Delete</a>
+            <a href="{% url 'viewJOb' i.id %}">View</a>
+            <a href="{% url 'editJob' i.id %}">Edit</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
+{% endblock body %}
